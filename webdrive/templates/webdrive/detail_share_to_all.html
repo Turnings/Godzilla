@@ -1,0 +1,18 @@
+{% extends "webdrive/base.html" %}
+
+{% block content %}
+
+<table>
+  <tr><td>Name:</td><td>{{ file.name }}</td></tr>
+  <tr><td>Size:</td><td>{{ file.object.size }}</td></tr>
+  <tr><td>Time:</td><td>{{ file.object.time|date:"Y-m-d H:m" }}</td></tr>
+  <tr><td>Digest:</td><td>{{ file.object.digest }}</td></tr>
+  <tr>
+      <td>Operation:</td>
+      <td class="operation2" colspan=2>
+        <a href="{% url 'webdrive:view' file.pk %}">view</a> |
+        <a href="{% url 'webdrive:download' file.pk %}">download</a>
+      </td>
+  </tr>
+</table>
+{% endblock %}

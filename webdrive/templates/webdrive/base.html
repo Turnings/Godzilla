@@ -1,0 +1,17 @@
+{% load static %}
+<html>
+<head>
+<title>{{ title }}</title>
+<link rel="stylesheet" href="{% static 'webdrive/css/main.css' %}" />
+</head>
+<body>
+
+{% include "webdrive/header.html" %}
+
+{% block content %}
+{% endblock %}
+
+{% include "webdrive/footer.html" %}
+
+</body>
+</html>

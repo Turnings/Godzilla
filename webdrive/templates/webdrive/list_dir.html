@@ -1,0 +1,60 @@
+{% extends "webdrive/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="path">
+  {% for parent in parents %}
+    {% if forloop.last %}
+    <span>/ {{ parent.name }}</span>
+    {% else %}
+    <span>/ <a href="{% url 'webdrive:list_dir' parent.pk %}">{{ parent.name }}</a></span>
+    {% endif %}
+  {% endfor %}
+
+  [ <a href="{% url 'webdrive:upload' %}">upload to this directory</a> ]
+</div>
+
+<hr>
+
+<table>
+  {% for file in files %}
+  <tr>
+    <td><img src="{% static 'webdrive/icons' %}/{{ file.mimetype }}.png"></td>
+    <td>
+      {% if file.is_regular %}
+      <a href="{% url 'webdrive:detail' file.pk %}">{{ file.name }}</a>
+      {% else %}
+      <a href="{% url 'webdrive:list_dir' file.pk %}">{{ file.name }}</a>
+      {% endif %}
+    </td>
+    <td class="size">{{ file.object.size }}</td>
+    <td class="time">{{ file.object.time|date:"Y-m-d H:m" }}</td>
+    <td class="operation">
+      <a href="{% url 'webdrive:detail' file.pk %}">detail</a> |
+      <a href="{% url 'webdrive:view' file.pk %}">view</a> |
+      <a href="{% url 'webdrive:download' file.pk %}">download</a> |
+      <a href="{% url 'webdrive:edit' file.pk %}">edit</a> |
+      <a href="{% url 'webdrive:create_share' file.pk %}">share</a> |
+      <a href="{% url 'webdrive:delete' file.pk %}">delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if files.has_previous %}
+            <a href="{% url 'webdrive:list_dir' files.0.parent.pk files.previous_page_number %}">&lt;&lt;</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ files.number }}/{{ files.paginator.num_pages }}
+        </span>
+
+        {% if files.has_next %}
+            <a href="{% url 'webdrive:list_dir' files.0.parent.pk files.next_page_number %}">&gt;&gt;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

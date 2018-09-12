@@ -1,0 +1,5 @@
+{% extends "webdrive/base.html" %}
+
+{% block content %}
+<p>This file does not support viewing, you can download it from <a href="{% url 'webdrive:download' file.pk %}">here</a>.</p>
+{% endblock %}

@@ -1,0 +1,56 @@
+.fast_access form {
+  display: inline-block;
+}
+
+.fast_access form input {
+  padding-left: 5px;
+}
+
+.pagination {
+  margin-top: 0.5em;
+}
+
+div.header {
+  padding-bottom: 2.5em;
+  clear: both;
+}
+
+div.title {
+  float: left;
+  width: 50%;
+  font-size: 1.5em;
+}
+
+div.fast_access {
+  float: right;
+}
+
+.nav {
+  margin-bottom: .5em;
+}
+
+div.path {
+  margin-bottom: .5em;
+}
+
+.code, .size, .time, .operation {
+  padding-left: .5em;
+}
+
+.operation, .operation2 {
+  font-variant-caps: small-caps;
+}
+
+a {
+  text-decoration: none;
+  color: blue;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
+  color: red;
+}

@@ -1,0 +1,52 @@
+{% extends "webdrive/base.html" %}
+{% load static %}
+
+{% block content %}
+<p>webdrive: {{ file_name }}</p>
+<p>{{ notice }}</p>
+<form method="post">
+  {% csrf_token %}
+  {{ form.errors }}
+  <table>
+    <tr>
+      <td><label for="id_code">Code:</label></td>
+      <td>{{ form.code }}</td>
+      <td><label>{{ form.anonymous }}anonymous</label></td>
+    </tr>
+    <tr>
+      <td><label for="id_expire">Expire:</label></td>
+      <td>{{ form.expire }}</td>
+      <td><label>{{ form.never_expire }}never expire</label></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <input type="submit" value="Proceed">
+        <input type="button" value="Cancel" onclick="window.history.back();">
+      </td>
+    </tr>
+  </table>
+  <input type="hidden" name="next" value="{{ next }}">
+</form>
+
+<script type="text/javascript" src="{% static 'webdrive/js/jquery.min.js' %}"></script>
+{% block extjs %}
+<script>
+$(function(){
+    $('#id_anonymous').click(function() {
+      if (this.checked)
+        $('#id_code').prop('disabled', true);
+      else
+        $('#id_code').prop('disabled', false);
+      });
+    $('#id_never_expire').click(function() {
+      if (this.checked)
+        $('#id_expire').prop('disabled', true);
+      else
+        $('#id_expire').prop('disabled', false);
+      });
+});
+</script>
+{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "webdrive/base.html" %}
+
+{% block content %}
+
+<table>
+  <tr><td>Name:</td><td>{{ file.name }}</td></tr>
+  <tr><td>Size:</td><td>{{ file.object.size }}</td></tr>
+  <tr><td>Time:</td><td>{{ file.object.time|date:"Y-m-d H:m" }}</td></tr>
+  <tr><td>Digest:</td><td>{{ file.object.digest }}</td></tr>
+{% if approved %}
+  <tr>
+      <td>Operation:</td>
+      <td class="operation2" colspan=2>
+        <a href="{% url 'webdrive:view' file.pk %}">view</a> |
+        <a href="{% url 'webdrive:download' file.pk %}">download</a>
+      </td>
+  </tr>
+{% else %}
+  <tr><td colspan=2>
+  <strong>Enter code to access the file</strong>
+  <form method="post" action="{% url 'webdrive:submit_code' file.pk %}">
+    {% csrf_token %}
+    <input name="code">
+    <input type="submit" value="OK">
+  </form>
+  </td></tr>
+{% endif %}
+</table>
+{% endblock %}

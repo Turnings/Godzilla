@@ -1,0 +1,38 @@
+{% extends "webdrive/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<table>
+  {% for share in shares %}
+  <tr>
+    <td><img src="{% static 'webdrive/icons' %}/{{ share.target.mimetype }}.png"></td>
+    <td>{{ share.target.name }}</td>
+    <td class="code">{{ share.code|default:'[anonymous]' }}</td>
+    <td class="time">{{ share.expire|date:"Y-m-d H:m"|default:'[indefinite]' }}</td>
+    <td class="size">{{ share.target.object.size }}</td>
+    <td class="time">{{ share.target.object.time|date:"Y-m-d H:m" }}</td>
+    <td class="operation">
+      <a href="{% url 'webdrive:edit_share' share.pk %}">edit</a> |
+      <a href="{% url 'webdrive:delete_share' share.pk %}">delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if shares.has_previous %}
+            <a href="{% url 'webdrive:list_shares' shares.previous_page_number %}">&lt;&lt;</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ shares.number }}/{{ shares.paginator.num_pages }}
+        </span>
+
+        {% if shares.has_next %}
+            <a href="{% url 'webdrive:list_shares' shares.next_page_number %}">&gt;&gt;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
